@@ -1,0 +1,41 @@
+{% extends "pages\base.html" %} {% block title %}Giỏ hàng của bạn{% endblock %}
+{% block content %} {% load static %}
+<div class="col-lg-9">
+  <table id="shoppingCart" style="width: 100%">
+    <tr>
+      <th>STT</th>
+      <th>Tiêu đề</th>
+      <th>Giá</th>
+      <th>Số lượng</th>
+      <th>Thành tiền</th>
+      <th>Xóa</th>
+    </tr>
+    {% for key, value in request.session.cart.items %} {% load mathfilters %}
+    <tr>
+      <td>{{key}}</td>
+      <td>{{value.title}}</td>
+      <td>{{value.price}}$</td>
+      <td>{{value.num}}</td>
+      <td>{{value.price|mul:value.num}}$</td>
+      <td><input type="button" value="Delete" onclick="deleteRow(this)"></td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Tổng cộng:</td>
+      <td>{{total}}</td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+<script>
+function deleteRow(r) {
+  var i = r.parentNode.parentNode.rowIndex;
+  document.getElementById("myTable").deleteRow(i);
+}
+</script>
+
+
+{% endblock %}
